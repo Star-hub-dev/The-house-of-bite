@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The House of Bite — Fast Food, Sangam Vihar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#1B1410;
+    --charcoal-2:#241A12;
+    --cream:#FBF3E4;
+    --cream-2:#F3E7CE;
+    --turmeric:#E8A93C;
+    --chili:#C1382B;
+    --herb:#6E8B4F;
+    --line: rgba(251,243,228,0.16);
+    --line-dark: rgba(27,20,16,0.14);
+    --radius: 18px;
+    --display: 'Anton', 'Impact', sans-serif;
+    --body: 'DM Sans', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--body);
+    background:var(--cream);
+    color:var(--charcoal-2);
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+  h1,h2,h3{font-family:var(--display); font-weight:400; letter-spacing:0.01em; line-height:0.95;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- bite-mark signature: scalloped / bitten edges ---------- */
+  .bitten-bottom{
+    -webkit-mask-image: radial-gradient(circle at 16px 0, transparent 15px, black 15.5px);
+    -webkit-mask-size: 32px 100%;
+    -webkit-mask-repeat: repeat-x;
+    -webkit-mask-position: bottom;
+    mask-image: radial-gradient(circle at 16px 0, transparent 15px, black 15.5px);
+    mask-size: 32px 100%;
+    mask-repeat: repeat-x;
+    mask-position: bottom;
+    padding-bottom:26px;
+  }
+  .bitten-top{
+    -webkit-mask-image: radial-gradient(circle at 16px 100%, transparent 15px, black 15.5px);
+    -webkit-mask-size: 32px 100%;
+    -webkit-mask-repeat: repeat-x;
+    -webkit-mask-position: top;
+    mask-image: radial-gradient(circle at 16px 100%, transparent 15px, black 15.5px);
+    mask-size: 32px 100%;
+    mask-repeat: repeat-x;
+    mask-position: top;
+    padding-top:26px;
+  }
+  .bite-corner{position:relative; overflow:visible;}
+  .bite-corner::after{
+    content:"";
+    position:absolute;
+    top:-14px; right:-14px;
+    width:34px; height:34px;
+    background:var(--cream);
+    border-radius:50%;
+    box-shadow: -8px 8px 0 -2px var(--cream);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--charcoal);
+    color:var(--cream);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+    max-width:1120px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--display);
+    font-size:19px;
+    letter-spacing:0.02em;
+    text-decoration:none;
+    color:var(--cream);
+  }
+  .logo-mark{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--turmeric);
+    position:relative;
+    flex-shrink:0;
+  }
+  .logo-mark::after{
+    content:"";
+    position:absolute;
+    top:-6px; right:-6px;
+    width:16px; height:16px;
+    background:var(--charcoal);
+    border-radius:50%;
+  }
+  nav ul.nav-links-desktop{list-style:none; display:flex; gap:28px;}
+  nav ul a{
+    text-decoration:none; color:var(--cream);
+    font-family:var(--mono); font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
+    opacity:0.85;
+    transition:opacity .2s;
+  }
+  nav ul a:hover{opacity:1;}
+  .nav-cta{
+    font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:0.06em;
+    background:var(--chili); color:var(--cream);
+    padding:10px 18px; border-radius:100px; text-decoration:none;
+    white-space:nowrap;
+  }
+  .nav-ctas{display:flex; align-items:center; gap:12px;}
+  .nav-social{
+    font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--cream); text-decoration:none;
+    border:1px solid var(--line);
+    padding:9px 16px; border-radius:100px;
+    display:inline-flex; align-items:center; gap:7px;
+    white-space:nowrap;
+    transition:border-color .2s, background .2s;
+  }
+  .nav-social::before{
+    content:"";
+    width:7px; height:7px; border-radius:50%;
+    background:linear-gradient(135deg, #E8A93C, #C1382B);
+    flex-shrink:0;
+  }
+  .nav-social:hover{border-color:var(--cream); background:rgba(251,243,228,0.06);}
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:38px; height:38px;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:10px;
+    cursor:pointer;
+    flex-shrink:0;
+    padding:0;
+  }
+  .nav-toggle span{
+    display:block;
+    height:2px;
+    width:18px;
+    margin:0 auto;
+    background:var(--cream);
+    border-radius:2px;
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-nav{
+    display:none;
+    flex-direction:column;
+    background:var(--charcoal-2);
+    border-top:1px solid var(--line);
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  .mobile-nav.open{max-height:400px;}
+  .mobile-nav a{
+    text-decoration:none; color:var(--cream);
+    font-family:var(--mono); font-size:13.5px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:16px 28px;
+    border-bottom:1px solid var(--line);
+  }
+  .mobile-nav a:last-child{border-bottom:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--charcoal);
+    color:var(--cream);
+    padding:64px 0 0;
+    position:relative;
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+    padding-bottom:56px;
+  }
+  .rating-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:13px;
+    background:rgba(251,243,228,0.08);
+    border:1px solid var(--line);
+    padding:7px 14px 7px 10px;
+    border-radius:100px;
+    margin-bottom:22px;
+  }
+  .rating-pill .stars{color:var(--turmeric); letter-spacing:1px;}
+  .hero h1{
+    font-size:clamp(48px, 7vw, 82px);
+    color:var(--cream);
+    margin-bottom:18px;
+  }
+  .hero h1 span{color:var(--turmeric);}
+  .hero p.lede{
+    font-size:18px;
+    max-width:46ch;
+    color:var(--cream-2);
+    line-height:1.55;
+    margin-bottom:30px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px;}
+  .btn{
+    font-family:var(--mono); font-size:13.5px; text-transform:uppercase; letter-spacing:0.06em;
+    padding:14px 24px;
+    border-radius:100px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--turmeric); color:var(--charcoal); font-weight:700;}
+  .btn-primary:hover{background:#f2b658;}
+  .btn-ghost{background:transparent; color:var(--cream); border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--cream);}
+
+  .hero-tags{
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .tag{
+    font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--cream-2);
+    border:1px solid var(--line);
+    padding:6px 12px;
+    border-radius:100px;
+  }
+
+  .hero-card{
+    background:var(--turmeric);
+    border-radius:var(--radius);
+    padding:26px;
+    color:var(--charcoal);
+    position:relative;
+  }
+  .hero-card .bite-corner::after{background:var(--charcoal); box-shadow:-8px 8px 0 -2px var(--charcoal);}
+  .hero-card-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:18px;
+  }
+  .hero-card-score{
+    font-family:var(--display);
+    font-size:56px;
+    line-height:0.85;
+  }
+  .hero-card-score small{
+    display:block;
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:400;
+    margin-top:6px;
+    letter-spacing:0.04em;
+  }
+  .hero-card-list{
+    list-style:none;
+    font-family:var(--mono);
+    font-size:13px;
+    display:flex; flex-direction:column; gap:10px;
+    border-top:1px dashed rgba(27,20,16,0.35);
+    padding-top:16px;
+  }
+  .hero-card-list li{display:flex; justify-content:space-between; gap:8px;}
+  .hero-card-list b{font-weight:700;}
+
+  .receipt-strip{
+    border-top:1px solid var(--line);
+    background:var(--charcoal-2);
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .receipt-strip .track{
+    display:inline-flex;
+    animation:scroll 26s linear infinite;
+  }
+  .receipt-strip span{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--cream-2);
+    padding:12px 26px;
+    white-space:nowrap;
+  }
+  .receipt-strip span::after{content:"•"; margin-left:26px; color:var(--turmeric);}
+  @keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .receipt-strip .track{animation:none;}
+  }
+
+  /* ---------- section shared ---------- */
+  section{padding:88px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:46px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(34px,4.5vw,50px);}
+  .section-head p{max-width:38ch; color:#5A4B3A; line-height:1.55;}
+  .eyebrow-row{display:flex; align-items:center; gap:12px; margin-bottom:12px;}
+  .eyebrow-row .dot{width:8px; height:8px; border-radius:50%; background:var(--chili);}
+  .eyebrow{color:var(--chili);}
+
+  /* ---------- menu ---------- */
+  .menu-section{background:var(--cream);}
+  .menu-tabs{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-bottom:40px;
+  }
+  .menu-tabs a{
+    font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em;
+    text-decoration:none; color:var(--charcoal-2);
+    border:1px solid var(--line-dark);
+    padding:8px 15px; border-radius:100px;
+    background:#fff;
+    transition:background .2s, border-color .2s;
+  }
+  .menu-tabs a:hover{border-color:var(--chili); color:var(--chili);}
+
+  .menu-columns{
+    column-count:2;
+    column-gap:44px;
+  }
+  .menu-cat{
+    break-inside:avoid;
+    -webkit-column-break-inside:avoid;
+    background:#fff;
+    border:1px solid var(--line-dark);
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin-bottom:26px;
+    display:inline-block;
+    width:100%;
+  }
+  .menu-cat-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .menu-cat-head h3{font-size:24px; color:var(--charcoal-2);}
+  .menu-cat-head span{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--herb);
+  }
+  .menu-cat ul{list-style:none; display:flex; flex-direction:column; gap:16px;}
+  .menu-cat li{border-bottom:1px dashed var(--line-dark); padding-bottom:14px;}
+  .menu-cat li:last-child{border-bottom:none; padding-bottom:0;}
+  .item-link{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    border-radius:10px;
+    margin:-8px -10px;
+    padding:8px 10px;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .item-link:hover{background:var(--cream-2); transform:translateX(2px);}
+  .item-link:hover .item-name{color:var(--chili);}
+  .item-link:hover .price{text-decoration:underline; text-decoration-color:rgba(193,56,43,0.4);}
+  .item-row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    margin-bottom:5px;
+  }
+  .item-name{font-size:15.5px; font-weight:500; color:var(--charcoal-2);}
+  .item-name .mini-tag{
+    font-family:var(--mono); font-weight:400; font-size:10px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--herb);
+    border:1px solid var(--herb);
+    border-radius:100px;
+    padding:2px 8px;
+    margin-left:8px;
+    vertical-align:2px;
+  }
+  .item-row .price{
+    font-family:var(--mono); font-weight:700; color:var(--chili);
+    white-space:nowrap; font-size:14.5px;
+  }
+  .item-desc{font-size:13px; line-height:1.5; color:#7A6A56;}
+  .item-link::after{
+    content:"Order on Zomato →";
+    display:block;
+    font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--chili); opacity:0; transition:opacity .15s ease;
+    margin-top:6px;
+  }
+  .item-link:hover::after{opacity:1;}
+  .menu-note{
+    margin-top:34px;
+    font-family:var(--mono); font-size:13px; color:#5A4B3A;
+    text-align:center;
+  }
+  @media (max-width: 880px){
+    .menu-columns{column-count:1;}
+  }
+
+  /* ---------- reviews ---------- */
+  .reviews-section{
+    background:var(--charcoal);
+    color:var(--cream);
+  }
+  .reviews-section .section-head p{color:var(--cream-2);}
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .review-card{
+    background:var(--charcoal-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+  }
+  .review-stars{color:var(--turmeric); letter-spacing:2px; font-size:14px; margin-bottom:16px;}
+  .review-quote{font-size:16.5px; line-height:1.6; margin-bottom:22px; color:var(--cream);}
+  .review-who{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--cream-2);
+    border-top:1px dashed var(--line);
+    padding-top:14px;
+  }
+  .review-summary-bar{
+    margin-top:40px;
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:13px; color:var(--cream-2);
+  }
+  .review-summary-bar b{color:var(--turmeric); font-family:var(--display); font-size:20px; font-weight:400;}
+
+  /* ---------- visit / map ---------- */
+  .visit-section{background:var(--cream-2);}
+  .visit-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:stretch;
+  }
+  .visit-card{
+    background:var(--cream);
+    border-radius:var(--radius);
+    padding:34px;
+    border:1px solid var(--line-dark);
+  }
+  .visit-card h3{font-size:24px; margin-bottom:22px;}
+  .info-row{
+    display:flex; gap:16px; align-items:flex-start;
+    padding:16px 0;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .info-row:last-child{border-bottom:none;}
+  .info-row .k{
+    font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--herb); width:110px; flex-shrink:0; padding-top:2px;
+  }
+  .info-row .v{font-size:15px; line-height:1.5;}
+  .info-row .v a{color:var(--chili); text-decoration:underline; text-decoration-color:rgba(193,56,43,0.35);}
+  .map-frame{
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid var(--line-dark);
+    min-height:340px;
+  }
+  .map-frame iframe{width:100%; height:100%; min-height:340px; border:0; display:block;}
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--charcoal);
+    color:var(--cream-2);
+    padding:44px 0 30px;
+  }
+  .footer-inner{
+    display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .footer-inner .logo{color:var(--cream);}
+  footer .foot-links{display:flex; gap:22px; list-style:none;}
+  footer .foot-links a{font-family:var(--mono); font-size:12.5px; text-decoration:none; text-transform:uppercase; letter-spacing:0.05em; color:var(--cream-2);}
+  .foot-fine{
+    margin-top:26px; padding-top:22px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; color:#8a7a66; text-align:center;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 880px){
+    .nav-links-desktop{display:none;}
+    .nav-toggle{display:flex;}
+    .mobile-nav{display:flex;}
+    .hero-inner{grid-template-columns:1fr;}
+    .review-grid{grid-template-columns:1fr;}
+    .visit-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width: 560px){
+    .wrap{padding:0 18px;}
+    .hero{padding-top:40px;}
+    .hero-card-top{flex-direction:column; gap:14px;}
+    .nav{padding:14px 18px;}
+    .nav-social{display:none;}
+    .nav-cta{padding:9px 14px; font-size:12px;}
+    .logo{font-size:16px;}
+    .logo-mark{width:28px; height:28px;}
+  }
+
+  :focus-visible{outline:2px solid var(--turmeric); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo"><span class="logo-mark"></span> The House of Bite</a>
+    <ul class="nav-links-desktop">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a class="nav-social" href="https://www.instagram.com/thehouseofbite2025/" target="_blank" rel="noopener">Follow Us</a>
+      <a class="nav-cta" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener">Order Now</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#menu">Menu</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#visit">Visit</a>
+    <a href="https://www.instagram.com/thehouseofbite2025/" target="_blank" rel="noopener">Follow Us on Instagram</a>
+    <a href="tel:+919315409774">Call — 093154 09774</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="rating-pill">
+          <span class="stars">★★★★★</span> 4.9 from 50 diners in Sangam Vihar
+        </div>
+        <h1>FAST FOOD<br>WORTH THE<br><span>FIRST BITE.</span></h1>
+        <p class="lede">Momos, burgers, pasta and pizza made fresh and served fast, in a cozy corner of Devli, Sangam Vihar. Generous portions, friendly faces, no fuss.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener">Order Now on Zomato</a>
+          <a class="btn btn-ghost" href="tel:+919315409774">Call — 093154 09774</a>
+          <a class="btn btn-ghost" href="https://www.instagram.com/thehouseofbite2025/" target="_blank" rel="noopener">Follow Us</a>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">Dine-in</span>
+          <span class="tag">Takeaway</span>
+          <span class="tag">No-contact delivery</span>
+          <a class="tag" style="text-decoration:none;" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener">Order online</a>
+        </div>
+      </div>
+
+      <div class="hero-card bite-corner">
+        <div class="hero-card-top">
+          <div class="hero-card-score">4.9<small>Avg. rating · 50 reviews</small></div>
+        </div>
+        <ul class="hero-card-list">
+          <li><span>Price for two</span> <b>₹200–400</b></li>
+          <li><span>Today</span> <b>Open · Closes 11 PM</b></li>
+          <li><span>Cuisine</span> <b>Fast Food</b></li>
+          <li><span>Locality</span> <b>Sangam Vihar, Delhi</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="receipt-strip">
+      <div class="track">
+        <span>A/563, Street 14, Block L1, Devli, Sangam Vihar</span>
+        <span>Open Daily · Closes 11 PM</span>
+        <span>093154 09774</span>
+        <span>Dine-in · Takeaway · Delivery</span>
+        <span>A/563, Street 14, Block L1, Devli, Sangam Vihar</span>
+        <span>Open Daily · Closes 11 PM</span>
+        <span>093154 09774</span>
+        <span>Dine-in · Takeaway · Delivery</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow-row"><span class="dot"></span><span class="eyebrow">Today's Bites</span></div>
+          <h2>What's cooking.</h2>
+        </div>
+        <p>The favourites diners keep coming back for — steamed hot, fried crisp, or twirled fresh, however the craving calls for it.</p>
+      </div>
+
+      <div class="menu-tabs">
+        <a href="#cat-pizza">Pizza</a>
+        <a href="#cat-burgers">Burgers</a>
+        <a href="#cat-sandwiches">Sandwiches</a>
+        <a href="#cat-snacks">Snacks</a>
+        <a href="#cat-maggi">Maggi</a>
+        <a href="#cat-rolls">Rolls</a>
+        <a href="#cat-smallbites">Small Bites</a>
+        <a href="#cat-combos">Combos &amp; Meals</a>
+      </div>
+
+      <div class="menu-columns">
+
+        <div class="menu-cat" id="cat-pizza">
+          <div class="menu-cat-head"><h3>Pizza</h3><span>Stone Baked</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Corn Pizza<span class="mini-tag">customizable</span></span><span class="price">₹139</span></div><p class="item-desc">Cheesy pizza topped with sweet corn.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Veg Supreme Pizza<span class="mini-tag">customizable</span></span><span class="price">₹179</span></div><p class="item-desc">Loaded with fresh veggies, melty cheese, and a perfect crispy crust.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Tomato Pizza</span><span class="price">₹109</span></div><p class="item-desc">Fresh tomato slices, mozzarella cheese &amp; flavorful herbs on a crispy pizza base.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Capsicum Pizza</span><span class="price">₹119</span></div><p class="item-desc">Crispy pizza topped with fresh capsicum, mozzarella cheese, and aromatic herbs.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Onion Corn Pizza</span><span class="price">₹139</span></div><p class="item-desc">Loaded with sweet corn, fresh onions, mozzarella cheese, and flavorful herbs.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">French Fries Pizza</span><span class="price">₹169</span></div><p class="item-desc">Crispy French fries, melted mozzarella cheese, and savory seasonings.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-burgers">
+          <div class="menu-cat-head"><h3>Burgers</h3><span>Off the Grill</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Classic Veg Burger<span class="mini-tag">veg</span></span><span class="price">₹99</span></div><p class="item-desc">Veg patty with lettuce, cheese, and sauce.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Paneer Burger<span class="mini-tag">veg</span></span><span class="price">₹129</span></div><p class="item-desc">Spicy paneer with peri peri sauce.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Classic Chicken Burger</span><span class="price">₹149</span></div><p class="item-desc">Tender chicken patty with creamy sauce.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-sandwiches">
+          <div class="menu-cat-head"><h3>Sandwiches</h3><span>Grilled Fresh</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Cheese Corn Sandwich</span><span class="price">₹129</span></div><p class="item-desc">Sweet corn and cheese stuffing.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Tomato Onion Sandwich</span><span class="price">₹49</span></div><p class="item-desc">Refreshing sandwich with basic veggies.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Veg Paneer Sandwich</span><span class="price">₹129</span></div><p class="item-desc">Spiced paneer between grilled bread.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Egg Mayo Sandwich</span><span class="price">₹99</span></div><p class="item-desc">Creamy egg mayo stuffed sandwich.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Omelette Sandwich</span><span class="price">₹99</span></div><p class="item-desc">Fluffy omelette tucked in sandwich bread.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Cucumber Tomato Sandwich</span><span class="price">₹89</span></div><p class="item-desc">Simple sandwich with cucumber and tomato.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-snacks">
+          <div class="menu-cat-head"><h3>Snacks</h3><span>Sides</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Classic Fries</span><span class="price">₹89</span></div><p class="item-desc">Straight cut crispy salted fries.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Masala Fries</span><span class="price">₹95</span></div><p class="item-desc">Fries tossed in tangy masala.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-maggi">
+          <div class="menu-cat-head"><h3>Maggi</h3><span>Comfort Bowl</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Peri Peri Maggi</span><span class="price">₹99</span></div><p class="item-desc">Spicy peri peri flavored Maggi.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Plain Maggi</span><span class="price">₹79</span></div><p class="item-desc">Classic plain masala Maggi.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Desi Masala Maggi</span><span class="price">₹99</span></div><p class="item-desc">Indian style spiced Maggi.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Cheese Veggie Maggi</span><span class="price">₹129</span></div><p class="item-desc">Maggi with vegetables and cheese.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Paneer Maggi</span><span class="price">₹129</span></div><p class="item-desc">Spiced paneer tossed with Maggi.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Egg Masala Maggi</span><span class="price">₹139</span></div><p class="item-desc">Masala Maggi with scrambled egg.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-rolls">
+          <div class="menu-cat-head"><h3>Rolls</h3><span>Wrapped Fresh</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Veg Paneer Roll</span><span class="price">₹149</span></div><p class="item-desc">Grilled paneer and veggies wrapped in paratha.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-smallbites">
+          <div class="menu-cat-head"><h3>Small Bites</h3><span>For Sharing</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Masala Fries</span><span class="price">₹119</span></div><p class="item-desc">Spicy peri peri seasoned fries.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Peri Peri Fries</span><span class="price">₹129</span></div><p class="item-desc">Fries topped with paneer and sauces.</p></a></li>
+          </ul>
+        </div>
+
+        <div class="menu-cat" id="cat-combos">
+          <div class="menu-cat-head"><h3>Combos &amp; Meals</h3><span>Best Value</span></div>
+          <ul>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Classic Veg Burger Meal<span class="mini-tag">veg</span></span><span class="price">₹159</span></div><p class="item-desc">Aloo tikki burger, Pepsi (250 ml), regular fries.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Peri Peri Veg Burger Meal<span class="mini-tag">veg</span></span><span class="price">₹179</span></div><p class="item-desc">Veg burger, regular peri peri fries, Pepsi (250 ml).</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">2 Veg Burger Combo<span class="mini-tag">veg</span></span><span class="price">₹179</span></div><p class="item-desc">Two crispy aloo tikki veg burgers.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Party Burger Meal<span class="mini-tag">veg</span></span><span class="price">₹499</span></div><p class="item-desc">2 veg burgers, 2 regular fries, 2 Pepsi (250 ml).</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Classic Chicken Burger Meal</span><span class="price">₹249</span></div><p class="item-desc">1 chicken burger, regular fries, Pepsi (250 ml).</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Chicken Burger Party Meal</span><span class="price">₹699</span></div><p class="item-desc">2 classic chicken burgers, 2 regular fries, 2 Pepsi (250 ml).</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">2 Mix Veg Pizza Meal</span><span class="price">₹299</span></div><p class="item-desc">Loaded with fresh veggies, rich cheese &amp; perfectly baked crust.</p></a></li>
+            <li><a class="item-link" href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener"><div class="item-row"><span class="item-name">Veg Sandwich with Fries &amp; Cold Coffee<span class="mini-tag">veg</span></span><span class="price">₹149</span></div><p class="item-desc">Crispy grilled veg sandwich with fresh veggies, sauce &amp; melted cheese, served with chilled cold coffee.</p></a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <p class="menu-note">Full menu shared on call &amp; on order-online partners</p>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section bitten-top" id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow-row"><span class="dot" style="background:var(--turmeric)"></span><span class="eyebrow" style="color:var(--turmeric)">Word on the Street</span></div>
+          <h2>What Sangam Vihar<br>is saying.</h2>
+        </div>
+        <p>Diners keep pointing to the same things: generous portions, fresh ingredients, fair prices, and a team that makes you feel looked after.</p>
+      </div>
+
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">A lovely first visit with a friend — the food came out quickly, the prices felt fair for what we got, and the space itself was clearly put together with care. The owner even stopped by to say hello.</p>
+          <div class="review-who"><span>Piyush Kashyap</span><span>Verified visit</span></div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">Quick service and ingredients that actually taste fresh. The momos in particular were packed with flavour, and the portion size made it easy value for money — a solid stop for a day out.</p>
+          <div class="review-who"><span>Zara Khan</span><span>Verified visit</span></div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">Great atmosphere from the moment you walk in, staff that go out of their way to help, and food that hits the mark every time — this has become a regular spot for get-togethers.</p>
+          <div class="review-who"><span>Speedy Kingh</span><span>Verified visit</span></div>
+        </div>
+      </div>
+
+      <div class="review-summary-bar">
+        <span><b>4.9 / 5</b></span>
+        <span>·</span>
+        <span>50 total reviews</span>
+        <span>·</span>
+        <span>Diners highlight: momos, pasta, friendly staff, generous portions</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="visit-section" id="visit">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow-row"><span class="dot"></span><span class="eyebrow">Find Us</span></div>
+          <h2>Come say hi.</h2>
+        </div>
+        <p>Tucked into Block L1, Devli — open every day, easy to find, easier to fall in love with.</p>
+      </div>
+
+      <div class="visit-grid">
+        <div class="visit-card">
+          <h3>Details</h3>
+          <div class="info-row">
+            <span class="k">Address</span>
+            <span class="v">A/563, Street 14, South, Block L1, Devli, Sangam Vihar, New Delhi, Delhi 110080</span>
+          </div>
+          <div class="info-row">
+            <span class="k">Hours</span>
+            <span class="v">Open daily · Closes 11 PM</span>
+          </div>
+          <div class="info-row">
+            <span class="k">Phone</span>
+            <span class="v"><a href="tel:+919315409774">093154 09774</a></span>
+          </div>
+          <div class="info-row">
+            <span class="k">Price</span>
+            <span class="v">₹200–400 for two people</span>
+          </div>
+          <div class="info-row">
+            <span class="k">Services</span>
+            <span class="v">Dine-in · Takeaway · No-contact delivery · Order online</span>
+          </div>
+          <div class="info-row">
+            <span class="k">Get there</span>
+            <span class="v"><a href="https://www.google.com/maps/search/?api=1&query=The+House+of+Bite+A%2F563+Street+14+Block+L1+Devli+Sangam+Vihar+New+Delhi+110080" target="_blank" rel="noopener">Open in Google Maps →</a></span>
+          </div>
+        </div>
+
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=The+House+of+Bite,A%2F563+Street+14+Block+L1+Devli+Sangam+Vihar+New+Delhi+110080&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Map to The House of Bite">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a href="#top" class="logo"><span class="logo-mark"></span> The House of Bite</a>
+    <ul class="foot-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="tel:+919315409774">093154 09774</a></li>
+      <li><a href="https://www.instagram.com/thehouseofbite2025/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.zomato.com/ncr/the-house-of-bite-saket-new-delhi/order" target="_blank" rel="noopener">Order on Zomato</a></li>
+    </ul>
+  </div>
+  <div class="wrap foot-fine">
+    THE HOUSE OF BITE · A/563 Street 14, Block L1, Devli, Sangam Vihar, New Delhi 110080 · Open Daily, Closes 11 PM
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+</body>
+</html>
